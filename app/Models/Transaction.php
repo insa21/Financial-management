@@ -7,19 +7,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class Transaction extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
         'name',
-        'is_expense',
+        'category_id',
+        'date',
+        'amount',
+        'note',
         'image'
     ];
 
-    public function transactions()
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Category::class);
     }
 }
