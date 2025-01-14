@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TransactionResource\Pages;
-use App\Models\Transaction;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Transaction;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\TransactionResource\Pages;
 
 class TransactionResource extends Resource
 {
@@ -44,21 +45,29 @@ class TransactionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('name')
-                ->searchable(),
-            Tables\Columns\IconColumn::make('category.is_expense')
-                ->boolean(),
+            Tables\Columns\ImageColumn::make('category.image')
+                ->label('Gambar'),
             Tables\Columns\TextColumn::make('category.name')
-                ->sortable(),
+                ->description(fn(Transaction $record): string => $record->name)
+                ->label('Transaksi'),
+            Tables\Columns\IconColumn::make('category.is_expense')
+                ->boolean()
+                ->label('Tipe')
+                ->trueicon('heroicon-o-arrow-up-circle')
+                ->falseicon('heroicon-o-arrow-down-circle')
+                ->trueColor('danger')
+                ->falseColor('success'),
+            //     ->sortable(),
             Tables\Columns\TextColumn::make('date')
                 ->date()
+                ->label('Tanggal')
                 ->sortable(),
             Tables\Columns\TextColumn::make('amount')
                 ->numeric()
+                ->money('IDR', locale: 'ID')
                 ->sortable(),
             // Tables\Columns\TextColumn::make('note')
             //     ->searchable(),
-            Tables\Columns\ImageColumn::make('image'),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
