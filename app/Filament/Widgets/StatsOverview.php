@@ -16,9 +16,8 @@ class StatsOverview extends BaseWidget
         return [
             Stat::make('Total Pemasukan', $pemasukan)
                 ->description('32k increase')
-                ->descriptionIcon('heroicon-m-cash')
-                ->color('success')
-                ->icon('heroicon-m-cash'),
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
             Stat::make('Total Pengeluaran', $pengeluaran),
             Stat::make('Selisih', $pemasukan - $pengeluaran),
         ];
